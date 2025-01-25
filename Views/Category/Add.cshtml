@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Category";
+}
+
+@model MediaSoft.Models.CategoryViewModel;
+<div class="myBody">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-2">
+                <form method="post">
+                    <div class="mb-2">
+                        <label for="CategoryName" class="form-label fs-5 text-black">Введите название Категории</label>
+                        <input type="text" class="form-control" asp-for="NewCategory.Name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Добавить категорию</button>
+                </form>
+            </div>
+        </div>
+    <div class="row pt-2">
+        @if (Model.Categories != null && Model.Categories.Any())
+        {
+            foreach (var category in Model.Categories)
+            {
+                <div class="col-md-3">
+                    <div class="card mb-2 bg-warning">
+                            <!-- Управление категориями -->
+                        <div class="card-body position-relative">
+                            <h5 class="card-title text-center">@category.Name</h5>
+                            <form asp-action="Delete" asp-controller="Category" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@category.Id" />
+                                    <button type="submit" class="btn btn-outline-dark position-absolute top-100 start-50 translate-middle">❌</button> <!-- Удаление категории -->
+                            </form>
+                            <!-- Управление заметками -->
+                                <form asp-action="AddNote" asp-controller="Category" method="post">
+                                    <input type="hidden" name="categoryId" value="@category.Id" />
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control bg-warning-subtle" name="content" placeholder="Добавить заметку" required>
+                                        <button class="btn btn-outline-secondary text-black border-1" type="submit">Добавить</button>
+                                    </div>
+                                </form>
+                                @foreach (var note in Model.Notes.Where(n => n.CategoryId == category.Id))
+                                {
+                                    <div class="card mb-2">
+                                        <div class="card-body bg-warning">
+                                            <p class="card-text">@note.Content</p>
+                                            <form asp-action="HidenNote" asp-controller="Category" method="post" style="display:inline;">
+                                                <input type="hidden" name="id" value="@note.Id" />
+                                                <button type="submit" class="btn btn-outline-dark">✏️</button>
+                                            </form>
+                                            @if (Model.EditingNoteId.HasValue && Model.EditingNoteId.Value == note.Id)
+                                            {
+                                                <form asp-action="EditNote" asp-controller="Category" method="post">
+                                                    <input type="hidden" name="id" value="@note.Id" />
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" class="form-control" name="content" value="@note.Content" required>
+                                                        <button class="btn btn-outline-secondary" type="submit">Сохранить</button>
+                                                    </div>
+                                                </form>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-sm-center fs-1 p-2">У вас пока нету категорий<br />создайте одну!</p>
+        }
+    </div>
+    </div>
+</div>

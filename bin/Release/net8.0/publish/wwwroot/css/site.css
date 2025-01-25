@@ -1,0 +1,68 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.myBody{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+
+
+.myTilo{
+    height: 85%;
+    width: 100%;
+    display: flex;
+    gap: 5%;
+    padding-left: 20px;
+}
+
+.myContainer{
+    margin: 30px;
+}
+
+.myContainerHead{
+    height: 50px;
+    width: 100%;
+    background-color:blue;
+    color: white;
+    display: flex;
+    justify-content: center;
+    font-size: 25px;
+}
+.myContainerBody{
+    height: 500px;
+    width: 100%;
+    background-color: purple;
+    display: flex;
+}
+
+.myContainerButton{
+    height: 50px;
+    width: 100%;
+    background-color:red;
+    color: white;
+    display:flex;
+    justify-content:end;
+    align-items: end;
+}
